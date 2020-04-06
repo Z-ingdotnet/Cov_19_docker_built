@@ -30,9 +30,9 @@ RUN R -e "install.packages(c('readr','reshape2','lubridate','rgdal','shiny','shi
 
 #sudo cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/ && \
 
-sudo cp -R /shiny-server.conf  /etc/shiny-server/shiny-server.conf && \
-sudo cp -R /app /srv/shiny-server/ && \
-sudo cp -R /shiny-server.sh /usr/bin/shiny-server.sh 
+cp -R /shiny-server.conf  /etc/shiny-server/shiny-server.conf && \
+cp -R /app /srv/shiny-server/ && \
+cp -R /shiny-server.sh /usr/bin/shiny-server.sh 
 
 RUN ./usr/bin/shiny-server.sh
 
