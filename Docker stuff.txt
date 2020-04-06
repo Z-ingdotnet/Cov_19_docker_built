@@ -1,0 +1,30 @@
+
+#uninstall existing versions
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+sudo apt-get update
+#sudo apt-get install apt-transport-https ca-certificates
+
+#offical key
+#curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo apt install docker.io
+
+sudo systemctl start docker
+
+sudo systemctl enable docker
+
+docker --version
+
+
+#deb https://cloud.r-project.org/bin/linux/ubuntu disco-cran35/
+
+#check VM is Running on 32-bit or 64-bit
+uname -m
+
+#delete images
+docker rmi -f $(docker images -aq)
+
+
+#clean up docker and overlay2 folder
+docker system prune -a -f
