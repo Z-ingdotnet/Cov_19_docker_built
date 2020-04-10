@@ -28,3 +28,23 @@ docker rmi -f $(docker images -aq)
 
 #clean up docker and overlay2 folder
 docker system prune -a -f
+
+
+
+docker run -p 80:80 cov_19_shinyapp:latest
+
+
+#modify after built
+
+docker run -it cov_19_shinyapp:latest bash
+
+#check permission isssues
+ls -l /srv/shiny-server/
+
+#add user shiny
+chmod -R 777 */srv/shiny-server/
+#chmod -R 755 */srv/shiny-server/
+
+exit
+#save changes
+docker commit "imageid"
