@@ -29,6 +29,9 @@ RUN apt-get update && apt-get install -y \
     xtail \
     libgdal-dev \ 
     libproj-dev \
+    r-cran-rjava\
+default-jre\
+default-jdk\
     wget
 
 ## Download and install ShinyServer (latest version)
@@ -38,13 +41,16 @@ RUN apt-get update && apt-get install -y \
 #    gdebi -n ss-latest.deb && \
 #    rm -f version.txt ss-latest.deb
 
+
+
 RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION -O "version.txt" && \
     VERSION=$(cat version.txt)  && \
     wget --no-verbose "https://download3.rstudio.org/ubuntu-14.04/x86_64/shiny-server-$VERSION-amd64.deb" -O ss-latest.deb && \
     gdebi -n ss-latest.deb && \
     rm -f version.txt ss-latest.deb && \
     . /etc/environment && \
-    R -e "install.packages(c('readr','reshape2','lubridate','rgdal','shiny','shinydashboard','maptools','ggplot2','ggthemes','rgeos','dplyr','repmis','scatterpie','RColorBrewer','shiny.i18n'), dependencies=TRUE,repos='http://cran.rstudio.com/')" && \
+R CMD javareconf
+R -e "install.packages(c('readr','reshape2','lubridate','rgdal','shiny','shinydashboard','maptools','ggplot2','ggthemes','rgeos','dplyr','repmis','scatterpie','RColorBrewer','shiny.i18n'), dependencies=TRUE,repos='http://cran.rstudio.com/')" && \
 	cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/    
 	#cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/ && \
     #chown shiny:shiny /var/lib/shiny-server && \

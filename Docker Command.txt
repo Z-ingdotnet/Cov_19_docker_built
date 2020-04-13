@@ -1,0 +1,90 @@
+
+#uninstall existing versions
+sudo apt-get remove docker docker-engine docker.io containerd runc
+
+sudo apt-get update
+#sudo apt-get install apt-transport-https ca-certificates
+
+#offical key
+#curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo apt install docker.io
+
+sudo systemctl start docker
+
+sudo systemctl enable docker
+
+docker --version
+
+
+#deb https://cloud.r-project.org/bin/linux/ubuntu disco-cran35/
+
+
+#check VM is Running on 32-bit or 64-bit
+uname -m
+
+
+
+#delete images
+docker rmi -f $(docker images -aq)
+
+
+
+#clean up docker and overlay2 folder
+docker system prune -a -f
+
+#clear up containers
+docker container prune
+docker container prune --filter "until=24h"
+
+
+#run
+docker run -p 80:80 cov_19_shinyapp:latest
+
+
+
+#modify image
+docker run -it cov_19_shinyapp:latest bash
+#modify container
+sudo docker exec -it c15d93a311cb bash
+
+
+
+
+#check permission isssues
+ls -l /srv/shiny-server/
+
+
+#add user shiny
+#use useradd instead of its interactive wrapper adduser.
+RUN useradd -ms /bin/bash newuser
+#which creates a home directory for the user and ensures that bash is the default shell.
+USER newuser
+WORKDIR /home/newuser
+
+
+
+
+#change permission
+chmod -R 777 /srv/shiny-server/
+#chmod -R 755 /srv/shiny-server/
+chmod -R +r /srv/shiny-server/
+
+
+
+
+#Prompt the system to display a list of launched containers:
+# find the ID of the running container
+sudo docker ps -a
+
+#edit
+docker run -it bdba97d53734 bash
+#docker command to start a bash shell in your container
+sudo docker exec -it 6b6b04b8a62c bash
+
+sudo docker commit e147ad92827a cov_19_shinyapp2
+
+
+exit
+#save changes
+docker commit "container name" "new image name"
