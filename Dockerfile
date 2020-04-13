@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y \
 #    libcurl4-gnutls-dev \
 #    libcairo2-dev \
 #    libxt-dev \
-#    libssl-dev \
-#    libxml2-dev \
+    libssl-dev \
+    libxml2-dev \
 #    cmake \
     ## Pro-specific
 #    libpam0g-dev \
@@ -27,6 +27,8 @@ RUN apt-get update && apt-get install -y \
     libcairo2-dev \
     libxt-dev \
     xtail \
+    libgdal-dev \ 
+    libproj-dev \
     wget
 
 ## Download and install ShinyServer (latest version)
@@ -51,9 +53,12 @@ RUN wget --no-verbose https://download3.rstudio.org/ubuntu-14.04/x86_64/VERSION 
 EXPOSE 80
 
 
+
 COPY shiny-server.conf  /etc/shiny-server/shiny-server.conf
 
 COPY /app /srv/shiny-server/ 
+
+RUN chmod -R 777 /srv/shiny-server/
 
 COPY shiny-server.sh /usr/bin/shiny-server.sh 
 
